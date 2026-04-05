@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Pixel Art Freelancer</title>
+
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+    }
+
+    header {
+      background: #111;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 60px 20px;
+      background: white;
+    }
+
+    .hero h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: #555;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 15px 30px;
+      background: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 5px;
+    }
+
+    .btn:hover {
+      background: #218838;
+    }
+
+    .features {
+      padding: 40px;
+      display: flex;
+      justify-content: space-around;
+      text-align: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .feature {
+      max-width: 250px;
+    }
+
+    .form-section {
+      background: #fff;
+      padding: 40px;
+      text-align: center;
+    }
+
+    input, textarea {
+      padding: 10px;
+      margin: 10px;
+      width: 250px;
+    }
+
+    footer {
+      background: #111;
+      color: white;
+      text-align: center;
+      padding: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h2>Pixel Art Freelancer</h2>
+</header>
+
+<section class="hero">
+  <h1>Criação de Pixel Art Profissional</h1>
+  <p>Personagens, assets e cenários para jogos e projetos</p>
+  <button class="btn" onclick="scrollToForm()">Solicitar orçamento</button>
+</section>
+
+<section class="features">
+  <div class="feature">
+    <h3>🎮 Personagens</h3>
+    <p>Sprites únicos com estilo pixel art para jogos</p>
+  </div>
+
+  <div class="feature">
+    <h3>🧱 Assets</h3>
+    <p>Itens, tilesets e elementos visuais prontos para uso</p>
+  </div>
+
+  <div class="feature">
+    <h3>🌆 Cenários</h3>
+    <p>Ambientes completos para seus projetos</p>
+  </div>
+</section>
+
+<!-- FORMULÁRIO -->
+<form class="form-section" id="form" onsubmit="submitForm(event)">
+  <h2>Entre em contato</h2>
+
+  <input type="text" id="name" placeholder="Seu nome" required><br>
+  <input type="email" id="email" placeholder="Seu email" required><br>
+  <textarea id="msgInput" placeholder="Descreva o que deseja" required></textarea><br>
+  <input type="text" id="reference" placeholder="Link de referência"><br>
+
+  <button class="btn" type="submit">Enviar</button>
+  <button type="button" class="btn" onclick="whatsapp()">Falar no WhatsApp</button>
+
+  <p id="msg"></p>
+</form>
+
+<footer>
+  <p>© 2026 Pixel Art Freelancer</p>
+</footer>
+
+<script>
+  // 🔑 PUBLIC KEY
+  emailjs.init("olHpB9AerwvkoAi4J");
+
+  function scrollToForm() {
+    document.getElementById("form").scrollIntoView({ behavior: "smooth" });
+  }
+
+  function submitForm(event) {
+    event.preventDefault();
+
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const msgInput = document.getElementById("msgInput").value;
+    const reference = document.getElementById("reference").value;
+
+    const msg = document.getElementById("msg");
+
+    msg.style.color = "black";
+    msg.innerText = "Enviando...";
+
+    emailjs.send("service_8z2htdj", "template_5s4vzqq", {
+      name: name,
+      email: email,
+      message: msgInput,
+      reference: reference
+    })
+    .then(() => {
+      msg.style.color = "green";
+      msg.innerText = "Mensagem enviada! 🚀";
+      document.getElementById("form").reset();
+    })
+    .catch((error) => {
+      msg.style.color = "red";
+      msg.innerText = "Erro ao enviar.";
+      console.error(error);
+    });
+  }
+
+  function whatsapp() {
+    const numero = "5547988852027";
+    const mensagem = encodeURIComponent("Olá! Quero um orçamento de pixel art.");
+
+    window.open(`https://wa.me/${numero}?text=${mensagem}`, '_blank');
+  }
+</script>
+
+</body>
+</html>
